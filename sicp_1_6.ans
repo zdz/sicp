@@ -1,0 +1,26 @@
+(define (new-if predicate then-clause else-clause)
+  (cond (predicate then-clause)
+        (else else-clause)))
+
+
+(new-if (= 2 3) 0 5)
+5
+
+(new-if (= 1 1) 0 5)
+0
+
+
+;; 
+
+(define (sqrt-iter guess x)
+  (new-if (good-enough? guess x)
+          guess
+          (sqrt-iter (improve guess x)           <<<====这个会无限递归调用而无视　new-if (good-enough? guess x)　的值
+                     x)))
+                     
+if 是lisp的关键字而不是一个函数，会被编译器特殊对待，
+在解释器是应用序的情况下，如果将if替换为new-if作为一个函数，
+new-if 将会被估值计算，如果是if则不会出现这种情况。
+
+在解释器是应用序的情况下，解释器会首先对运算符各个运算对象求值,
+如果在sqrt-iter中用new-if替换if,　sqrt-iter会无限递归调用而无视　new-if (good-enough? guess x)　的值
