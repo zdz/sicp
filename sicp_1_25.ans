@@ -1,0 +1,8 @@
+(define (fast-expt b n)
+  (cond ((= n 0) 1)
+        ((even? n) (square (fast-expt b (/ n 2))))
+        (else (* b (fast-expt b (- n 1))))))
+        
+(define (expmod base exp m)
+    (remainder (fast-expt base exp) m))
+可以工作正常，但不能用于快速素数检测，当exp较大时以上函数在运算过程中会产生很大的数，效率很差
