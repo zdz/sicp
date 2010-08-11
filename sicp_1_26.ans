@@ -1,0 +1,15 @@
+#lang planet neil/sicp
+
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder (* (expmod base (/ exp 2) m)
+                       (expmod base (/ exp 2) m))
+                    m))
+        (else
+         (remainder (* base (expmod base (- exp 1) m))
+                    m))))
+
+
+;如果使用连乘，每当exp是偶数的时候，相同的值会计算两次从而使增长阶从O(log[n])变成O(n)
+
